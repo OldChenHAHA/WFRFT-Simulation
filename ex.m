@@ -30,4 +30,3 @@ k = 1:length(r_awgn_cp_wfrft);
 r_awgn_cp_wfrft = r_awgn_cp_wfrft.*exp(1j*2*pi*0.4*k/number_of_wfrft_carriers);
 
 [CPStartPoint,FCO] = MLOFDMSyn(r_awgn_cp_wfrft, number_of_cp, number_of_wfrft_carriers, SNRdB);
-

@@ -30,7 +30,7 @@ H  = firrcos(N, Fc/(Fs/2), R, 2, TM, DT, [], win);
 total_errbit = 0;
 total_bit = 0;
 for sim_time_cnt = 1:snr_max_times
- 
+
 	%=============Transmiter=================%
 	% Generate user bit
 	tx_bit = randsrc(1,number_of_used_carriers*number_of_wfrft_symbols*2,[0 1]);
@@ -47,15 +47,15 @@ for sim_time_cnt = 1:snr_max_times
 	tx_cp_wfrft = [ tx_wfrft_qpsk(end-number_of_cp+1:end,:) ; tx_wfrft_qpsk ];
 	% Reshape data to one dimension
 	tx_signal = reshape(tx_cp_wfrft,1,number_of_wfrft_symbols*(number_of_cp+number_of_wfrft_carriers));
-	
+
 	% Upsample data
-	tx_upsampled_data = upsample(tx_signal,16); 
+	tx_upsampled_data = upsample(tx_signal,16);
 	% Tx Filter
 	tx_filter_output = conv(tx_upsampled_data,H);
 
 	%==============Channel=================%
 	channel_data = tx_filter_output;
-	EbN0linear = 10^(EbN0dB/10);                                           
+	EbN0linear = 10^(EbN0dB/10);
 	Es = sum(abs(channel_data).^2)/(number_of_cp+number_of_wfrft_carriers);
     Eb = Es/2;
 	N0 = Eb/EbN0linear;
@@ -64,9 +64,9 @@ for sim_time_cnt = 1:snr_max_times
 	rv1 = randn(1,numel(channel_data));
 	rv2 = randn(1,numel(channel_data));
 	noise = sigma.*complex(rv1,rv2);
-    
-	channel_awgn_data = channel_data + noise;    
-    % channel_awgn_data = channel_data;    
+
+	channel_awgn_data = channel_data + noise;
+    % channel_awgn_data = channel_data;
     % channel_awgn_data = awgn(channel_data,13.0103,'measured');
 	%==============Receiver===============%
 	% Rx Filter
@@ -81,10 +81,10 @@ for sim_time_cnt = 1:snr_max_times
     % check over
 	% Downsample data
     rx_filter_output = rx_filter_output(57:end);
-	shift = 8; % downsample shift in [0,n-1]
-	rx_upsampled_data = downsample(rx_filter_output,16,shift); 
+	shift = 6; % default: 8. downsample shift in [0,n-1]
+	rx_upsampled_data = downsample(rx_filter_output,16,shift);
     rx_upsampled_data = rx_upsampled_data(1:number_of_cp+number_of_wfrft_carriers);
-	
+
 	% Reshape data into matrix
 	rx_signal_matrix = reshape(rx_upsampled_data,(number_of_cp+number_of_wfrft_carriers),number_of_wfrft_symbols);
 	% Remove CP
@@ -104,7 +104,7 @@ for sim_time_cnt = 1:snr_max_times
 	[errbit,~]=biterr(rx_bit,tx_bit);
 	total_errbit = total_errbit + errbit;
 	total_bit = total_bit + length(tx_bit);
-    
+
     if total_errbit > MAX_ERROR_BITS
         break;
     end
