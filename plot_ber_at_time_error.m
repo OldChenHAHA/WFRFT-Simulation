@@ -2,8 +2,8 @@
 clc
 clear
 
-ALPHA = [0 0.5 0.7 1];
-EbN0dB = 0:10;
+ALPHA = [0 0.3 0.5 1];
+EbN0dB = 0:12;
 BER = zeros(length(EbN0dB),length(ALPHA));
 for alpha_id = 1:length(ALPHA)
     for ebn0db_id = 1:length(EbN0dB)
@@ -15,11 +15,11 @@ h=figure(1);
 semilogy(EbN0dB,BER(:,1),'-go','MarkerSize',8,'LineWidth',2);
 hold on
 semilogy(EbN0dB,BER(:,2),'-r*','MarkerSize',8,'LineWidth',2);
-semilogy(EbN0dB,BER(:,3),'-bs','MarkerSize',8,'LineWidth',2);
-semilogy(EbN0dB,BER(:,4),'-k+','MarkerSize',8,'LineWidth',2);
-%semilogy(SNR,BER(5,:),'-r+','MarkerSize',8,'LineWidth',1);
+semilogy(EbN0dB,BER(:,3),'-k+','MarkerSize',8,'LineWidth',2);
+semilogy(EbN0dB,BER(:,4),'-bs','MarkerSize',8,'LineWidth',2);
+%semilogy(EbN0dB,BER(:,5),'-ro','MarkerSize',8,'LineWidth',1);
 hold off
-legend( ['0'],['0.5'],['0.7'], ['1'] );
+legend( ['0'],['0.3'] ,['0.5'], ['1'] );
 FX=xlabel('Eb/N0(dB)');
 FY=ylabel('BER');
 set(FX,'FontSize',14);

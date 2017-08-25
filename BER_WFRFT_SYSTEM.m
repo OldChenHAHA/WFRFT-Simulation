@@ -5,9 +5,10 @@ function BER = BER_WFRFT_SYSTEM(EbN0dB, ALPHA)
 %%%%%%%%%%%%%%
 snr_max_times = 10^9;
 MAX_ERROR_BITS = 400;
+shift = 5; % default: 8. downsample shift in [0,n-1]
 
 number_of_wfrft_carriers = 2048;%2048;
-number_of_used_carriers = 1200;%1200;
+number_of_used_carriers = 800;%1200;
 number_of_cp = 144;%144;
 number_of_wfrft_symbols = 1; % dont change
 
@@ -81,12 +82,12 @@ for sim_time_cnt = 1:snr_max_times
     % check over
 	% Downsample data
     rx_filter_output = rx_filter_output(57:end);
-	shift = 6; % default: 8. downsample shift in [0,n-1]
-	rx_upsampled_data = downsample(rx_filter_output,16,shift);
-    rx_upsampled_data = rx_upsampled_data(1:number_of_cp+number_of_wfrft_carriers);
-
+	% shift = 4; % default: 8. downsample shift in [0,n-1]
+	rx_downsampled_data = downsample(rx_filter_output,16,shift);
+    rx_downsampled_data = rx_downsampled_data(1:number_of_cp+number_of_wfrft_carriers);
+    
 	% Reshape data into matrix
-	rx_signal_matrix = reshape(rx_upsampled_data,(number_of_cp+number_of_wfrft_carriers),number_of_wfrft_symbols);
+	rx_signal_matrix = reshape(rx_downsampled_data,(number_of_cp+number_of_wfrft_carriers),number_of_wfrft_symbols);
 	% Remove CP
 	rx_data_nocp = rx_signal_matrix(number_of_cp+1:end,:);
 	% Wfrft -alpha transform
