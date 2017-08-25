@@ -4,15 +4,15 @@ function BER = BER_WFRFT_SYSTEM(EbN0dB, ALPHA)
 % Parameters %
 %%%%%%%%%%%%%%
 snr_max_times = 10^9;
-MAX_ERROR_BITS = 200;
+MAX_ERROR_BITS = 400;
 
-number_of_wfrft_carriers = 1024;%2048;
-number_of_used_carriers = 1024;%1200;
-number_of_cp = 128;%144;
+number_of_wfrft_carriers = 2048;%2048;
+number_of_used_carriers = 1200;%1200;
+number_of_cp = 144;%144;
 number_of_wfrft_symbols = 1; % dont change
 
-index_of_used_carriers = 1:number_of_used_carriers;
-% index_of_used_carriers = [ 2:number_of_used_carriers/2+1  number_of_wfrft_carriers-number_of_used_carriers/2+1 :number_of_wfrft_carriers ];
+% index_of_used_carriers = 1:number_of_used_carriers;
+index_of_used_carriers = [ 2:number_of_used_carriers/2+1  number_of_wfrft_carriers-number_of_used_carriers/2+1 :number_of_wfrft_carriers ];
 
 %==============Filter Design==============%
 Fs = 16;  % Sampling Frequency
