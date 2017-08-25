@@ -11,7 +11,7 @@ function [CPStartPoint, FCO] = MLOFDMSyn(data, CP_LENGTH, NFFT, SNRdB)
 %   $Revision: 1.2 $  $Date: 2016/07/27 10:30:00 $
 
 % plot gamma figure, 0--OFF 1--ON
-figure_ON = 1;
+figure_ON = 0;
 
 %% й╠яс
 dataDelay = data;
