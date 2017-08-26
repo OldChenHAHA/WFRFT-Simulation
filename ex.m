@@ -1,19 +1,19 @@
-clc;clear;close all
+function [MSE_CPpos, MSE_FCOval] = MSE_MLSyn(EbN0dB, alpha, real_FCOval, number_of_cp)
 
 % Simulatoin Parameters
-EbN0dB = 8;
+%EbN0dB = 8;
 sim_max_times = 100;
-alpha = 1;
+%alpha = 1;
 
 % Frame Parameters
 number_of_wfrft_carriers = 2048;%2048;
 number_of_used_carriers = 2048;%1200;
-number_of_cp = 144;%144;
+%number_of_cp = 144;%144;
 number_of_wfrft_symbols = 3;
 length_of_cpSymbol = number_of_cp+number_of_wfrft_carriers;
 
-%index_of_used_carriers = 1:number_of_used_carriers;
-index_of_used_carriers = [ 2:number_of_used_carriers/2+1  number_of_wfrft_carriers-number_of_used_carriers/2+1 :number_of_wfrft_carriers ];
+index_of_used_carriers = 1:number_of_used_carriers;
+%index_of_used_carriers = [ 2:number_of_used_carriers/2+1  number_of_wfrft_carriers-number_of_used_carriers/2+1 :number_of_wfrft_carriers ];
 
 
 real_CPpos = 1 + length_of_cpSymbol;
@@ -64,7 +64,7 @@ for sim_cnt = 1:sim_max_times
 
 end % end of the sim_max_times
 
-MSE_CPpos = 1/sim_max_times*sum((sim_CPpos-real_CPpos).^2)
-MSE_FCOval = 1/sim_max_times*sum((sim_FCOval-real_FCOval).^2)
+MSE_CPpos = 1/sim_max_times*sum((sim_CPpos-real_CPpos).^2);
+MSE_FCOval = 1/sim_max_times*sum((sim_FCOval-real_FCOval).^2);
 
-
+end
